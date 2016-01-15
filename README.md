@@ -5,3 +5,5 @@ Welcome to the Mastery Challenge, a program designed to showcase your abilities 
 Here I will store the projectes I have completed.
 
 This shows I can use the basics of git version control system.
+
+Branches and merging are a breeze!
