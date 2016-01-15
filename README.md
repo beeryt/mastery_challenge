@@ -2,7 +2,7 @@
 
 Welcome to the Mastery Challenge, a program designed to showcase your abilities and challenge you to learn something new.
 
-## submitted projects
+* submitted projects
 	* python
 		* level 1
 	* php
@@ -12,7 +12,7 @@ Welcome to the Mastery Challenge, a program designed to showcase your abilities 
 	* Version control
 		* level 1
 
-## completed projects
+* completed projects
 	* Embedded Linux Board
 		* level 1
 		* level 2
@@ -29,7 +29,7 @@ Welcome to the Mastery Challenge, a program designed to showcase your abilities 
 		* level 1
 
 
-## not too difficult
+* not too difficult
 	* Server-side Networking
 		* level 2 (Just need username/password, php forms, mysql)
 	* PCB Assembly (Just need parts...)
