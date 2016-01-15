@@ -37,7 +37,9 @@ Welcome to the Mastery Challenge, a program designed to showcase your abilities 
 	* php
 		- [x] level 2
 	* python
-		- [x] level 1
+		- [x] ~~level 1~~
+		- [ ] level 2
+		- [ ] level 3
 	* Server-side Networking
 		- [x] level 1
 		- [ ] level 2 (Just need username/password, php forms, mysql)
