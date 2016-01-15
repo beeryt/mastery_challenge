@@ -37,9 +37,9 @@ Welcome to the Mastery Challenge, a program designed to showcase your abilities 
 	* Server-side Networking
 		* level 2 (Just need username/password, php forms, mysql)
 	* PCB Assembly (Just need parts...)
-		* level 1
-		* level 2
-		* level 3
+		[ ] level 1
+		[x] level 2
+		[ ] level 3
 	* Arduino
 		* level 2
 		* level 3
