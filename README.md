@@ -32,14 +32,14 @@ Welcome to the Mastery Challenge, a program designed to showcase your abilities 
 	* Teensy 2.0
 		* level 1
 
+PCB Assembly (Just need parts...)
+	[ ] level 1
+	[x] level 2
+	[ ] level 3
 
 * not too difficult
 	* Server-side Networking
 		* level 2 (Just need username/password, php forms, mysql)
-	* PCB Assembly (Just need parts...)
-		[ ] level 1
-		[x] level 2
-		[ ] level 3
 	* Arduino
 		* level 2
 		* level 3
