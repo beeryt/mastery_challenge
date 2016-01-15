@@ -11,6 +11,8 @@ Welcome to the Mastery Challenge, a program designed to showcase your abilities 
 		* level 1
 	* Version control
 		* level 1
+	* Linux
+		* level 1 (codecademy)
 
 * completed projects
 	* Embedded Linux Board
@@ -43,7 +45,6 @@ Welcome to the Mastery Challenge, a program designed to showcase your abilities 
 		* level 2 (learn UART, interrupter, Watchdog Timer, ADC)
 		* level 3 (once I know what cycle by cycle means)
 	* Linux
-		* level 1 (codecademy)
 		* level 2
 	* C++
 		* level 1
