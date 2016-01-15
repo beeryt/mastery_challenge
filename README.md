@@ -1,9 +1,4 @@
 # mastery_challenge
 
-Welcome to the Mastery Challenge, a program designed to showcase your abilities and challenge you to learn something new. To begin log in above.
+Welcome to the Mastery Challenge, a program designed to showcase your abilities and challenge you to learn something new.
 
-Here I will store the projectes I have completed.
-
-This shows I can use the basics of git version control system.
-
-Branches and merging are a breeze!
