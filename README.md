@@ -12,7 +12,9 @@ Welcome to the Mastery Challenge, a program designed to showcase your abilities 
 	* Version control
 		* level 1
 	* Linux
-		* level 1 (codecademy)
+		* level 1
+	* Client-side Networking
+		* level 1
 
 * completed projects
 	* Embedded Linux Board
@@ -51,7 +53,6 @@ Welcome to the Mastery Challenge, a program designed to showcase your abilities 
 		* level 2
 		* level 3
 	* Client-side Networking
-		* level 1 (show off my webserver)
 		* level 2 (write an API poller)
 	* Teensy 2.0
 		* level 1
