@@ -22,7 +22,7 @@ Welcome to the Mastery Challenge, a program designed to showcase your abilities 
 		- [x] level 1
 		- [ ] level 2 (write an API poller)
 	* Embedded Linux Board
-		- [ ] level 1
+		- [x] level 1
 		- [ ] level 2
 		- [ ] level 3 (beagleBone though....)
 	* Enclosure Design
