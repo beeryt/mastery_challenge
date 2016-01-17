@@ -8,10 +8,11 @@ Welcome to the Mastery Challenge, a program designed to showcase your abilities 
 	* Android
 		- [ ] level 1
 	* Arduino
-		- [ ] level 2
-		- [ ] level 3
+		- [ ] **level 1**
+		- [ ] **level 2**
+		- [ ] **level 3**
 	* AVR Microcontrollers
-		- [ ] level 1
+		- [ ] **level 1**
 		- [ ] level 2 (learn UART, interrupter, Watchdog Timer, ADC)
 		- [ ] level 3 (once I know what cycle by cycle means)
 	* C++
@@ -20,7 +21,11 @@ Welcome to the Mastery Challenge, a program designed to showcase your abilities 
 		- [ ] level 3
 	* Client-side Networking
 		- [x] level 1
-		- [ ] level 2 (write an API poller)
+		- [ ] **level 2**
+	* Embedded Communication
+		- [ ] *level 1*
+		- [ ] level 2
+		- [ ] level 3
 	* Embedded Linux Board
 		- [x] level 1
 		- [ ] level 2
@@ -29,7 +34,8 @@ Welcome to the Mastery Challenge, a program designed to showcase your abilities 
 		- [ ] level 1
 	* Linux
 		- [x] level 1
-		- [ ] level 2
+		- [ ] **level 2**
+		- [ ] level 3
 	* PCB Assembly (Just need parts...)
 		- [ ] level 1
 		- [ ] level 2
