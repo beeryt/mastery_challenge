@@ -8,7 +8,7 @@ Welcome to the Mastery Challenge, a program designed to showcase your abilities 
 	* Android
 		- [ ] level 1
 	* Arduino
-		- [ ] **level 1**
+		- [x] [level 1](https://youtu.be/s2KvaEAUyDA)
 		- [ ] **level 2**
 		- [ ] **level 3**
 	* AVR Microcontrollers
