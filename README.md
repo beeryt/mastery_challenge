@@ -27,7 +27,7 @@ Welcome to the Mastery Challenge, a program designed to showcase your abilities 
 		- [ ] level 2
 		- [ ] level 3
 	* Embedded Linux Board
-		- [x] level 1
+		- [x] [level 1](https://youtu.be/yK4MlGgrXHE)
 		- [ ] level 2
 		- [ ] level 3 (beagleBone though....)
 	* Enclosure Design
