@@ -6,8 +6,17 @@
 ##Master Control Flow
 ![master flow](./master-flow.png)
 
+    For each device:
+      Ask for instruction
+      process instruction
+      if local command: do
+      else: pass on
+      return response
+
 ##Slave Control Flow
 ![slave flow](./master-flow.png)
+
+    TODO
 
 ##Mastery Challenges
   - Arduino
