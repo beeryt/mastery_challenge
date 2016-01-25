@@ -7,8 +7,8 @@
     - [ ] Level 1 (Teensyduino: GPIO, ADC, interrupt, timer)
     - [ ] Level 2 (C: GPIO, ADC, interrupt, clock, timer, UART);
     - [ ] Level 3
-      - C: 4 GPIOs, ADC, 2 interrupts, timer, SPI/I2C
-      - Teensyduino: Install a crystal and demonstrate RTC
-      - Demonstrate use of DMA or I2S
+      - [ ] C: 4 GPIOs, ADC, 2 interrupts, timer, SPI/I2C
+      - [ ] Teensyduino: Install a crystal and demonstrate RTC
+      - [ ] Demonstrate use of DMA or I2S
   - AVR Microcontrollers
     - [ ] Level 2 (C: GPIO, UART, interrupt, SPI, I2C, PWM, watchdog, timer, ADC)
