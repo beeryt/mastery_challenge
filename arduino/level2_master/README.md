@@ -1,7 +1,7 @@
 #Project Overview
 
 ##Top-Level Diagram
-![system interfaces](./Arduino-.png)
+![top level](./top-level.png)
 
 ##Master Control Flow
 ![master flow](./master-flow.png)
