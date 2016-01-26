@@ -1,19 +1,19 @@
 #Project Overview
 
 ##Top-Level Diagram
-![top level](./top-level.png)
+![top level](./png/top-level.png)
 
 ##Control Flow
-![control flow](./flow.png)
+![control flow](./png/flow.png)
 
 ##Commands
-![color key](./key.png)
+![color key](./png/key.png)
 
 ###Set PWM
-![set pwm](./pwm.png)
+![set pwm](./png/pwm.png)
 
 ###Get Temperature
-![get temp](./temp.png)
+![get temp](./png/temp.png)
 
 ###Set PWM to Temperature
-![set pwm temp](./pwmtemp.png)
+![set pwm temp](./png/pwmtemp.png)
