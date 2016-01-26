@@ -3,32 +3,15 @@
 ##Top-Level Diagram
 ![top level](./top-level.png)
 
-##Master Control Flow
-![master flow](./flow.png)
+##Control Flow
+![control flow](./flow.png)
 
-    For each device:
-      Ask for instruction
-      process instruction
-      if local command: do
-      else: pass on
-      return response
+##Commands
+###Set PWM
+![set pwm](./pwm.png)
 
-##Slave Control Flow
-![slave flow](./master-flow.png)
+###Get Temperature
+![get temp](./temp.png)
 
-    TODO
-
-##Mastery Challenges
-  - Arduino
-    - [ ] Level 2 (Demonstrate 1 protocol, PWM, module)
-    - [ ] Level 3 (Demonstrate I2C/SPI/USART between boards)
-  - [ ] Port this to C
-    - AVR Microcontrollers
-      - [ ] Implement I/O, interrupts, watchdog, timers, adc
-      - [ ] Level 2 (Demonstrate all aspects)
-      - [ ] Level 3 (Write timed assembly)
-    - Embedded Communication
-      - In depth knowledge of I2C,SPI,UART,I2S,OneWire,LVDs
-      - [ ] Level 1 (Demonstrate 2 protocols)
-      - [ ] Level 2 (Demonstrate 4 protocols)
-      - [ ] Level 3 (Demonstrate LVDs)?
+###Set PWM to Temperature
+![set pwm temp](./pwmtemp.png)
