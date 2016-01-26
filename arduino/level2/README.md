@@ -7,6 +7,8 @@
 ![control flow](./flow.png)
 
 ##Commands
+![color key](./key.png)
+
 ###Set PWM
 ![set pwm](./pwm.png)
 
