@@ -4,7 +4,7 @@
 ![top level](./top-level.png)
 
 ##Master Control Flow
-![master flow](./master-flow.png)
+![master flow](./flow.png)
 
     For each device:
       Ask for instruction
