@@ -1,0 +1,241 @@
+gavrasm Gerd's AVR assembler version 3.5 (C)2015 by DG4FAC
+----------------------------------------------------------
+Source file: level2.asm
+Hex file:    level2.hex
+Eeprom file: level2.eep
+Compiled:    14.01.2016, 12:47:58
+Pass:        2
+     1: ;***********************************************************
+     2: ;*
+     3: ;*	BasicBumpBot.asm	-	V2.0
+     4: ;*
+     5: ;*	This program contains the neccessary code to enable the 
+     6: ;*	the TekBot to behave in the traditional BumpBot fashion.
+     7: ;*      It is written to work with the latest TekBots platform.
+     8: ;*	If you have an earlier version you may need to modify
+     9: ;* 	your code appropriately.
+    10: ;*
+    11: ;*	The behavior is very simple.  Get the TekBot moving
+    12: ;*	forward and poll for whisker inputs.  If the right 
+    13: ;*	whisker is activated, the TekBot backs up for a second,
+    14: ;*	turns left for a second, and then moves forward again.
+    15: ;*	If the left whisker is activated, the TekBot backs up 
+    16: ;*	for a second, turns right for a second, and then
+    17: ;*	continues forward.	
+    18: ;*
+    19: ;***********************************************************
+    20: ;*
+    21: ;*	 Author: David Zier and Mohammed Sinky (modification Jan 8, 2009)
+    22: ;*	   Date: January 8, 2009
+    23: ;*	Company: TekBots(TM), Oregon State University - EECS
+    24: ;*	Version: 2.0
+    25: ;*
+    26: ;***********************************************************
+    27: ;*	Rev	Date	Name		Description
+    28: ;*----------------------------------------------------------
+    29: ;*	-	3/29/02	Zier		Initial Creation of Version 1.0
+    30: ;*	-	1/08/09 Sinky		Version 2.0 modifictions
+    31: ;*
+    32: ;***********************************************************
+    33: 
+    34: .include "m128def.inc"				; Include definition file
+ -> Warning 009: Include defs not necessary, using internal values!
+   File: level2.asm, Line: 34
+   Source line: .include "m128def.inc"				; Include definition file
+    35: 
+    36: ;************************************************************
+    37: ;* Variable and Constant Declarations
+    38: ;************************************************************
+    39: .def	mpr = r16				; Multi-Purpose Register
+    40: .def	led = r20
+    41: .def	waitcnt = r17				; Wait Loop Counter
+    42: .def	ilcnt = r18				; Inner Loop Counter
+    43: .def	olcnt = r19				; Outer Loop Counter
+    44: 
+    45: .equ	WTime = 10				; Time to wait in wait loop
+    46: 
+    47: .equ	BTNR = 0				; Right Whisker Input Bit
+    48: .equ	BTNL = 2				; Left Whisker Input Bit
+    49: .equ	START = 0x04
+    50: 
+    51: ;/////////////////////////////////////////////////////////////
+    52: ;These macros are the values to make the TekBot Move.
+    53: ;/////////////////////////////////////////////////////////////
+    54: 
+    55: .equ	BTN_MASK = (1<<BTNL|1<<BTNR)
+    56: 
+    57: ;============================================================
+    58: ; NOTE: Let me explain what the macros above are doing.  
+    59: ; Every macro is executing in the pre-compiler stage before
+    60: ; the rest of the code is compiled.  The macros used are
+    61: ; left shift bits (<<) and logical or (|).  Here is how it 
+    62: ; works:
+    63: ;	Step 1.  .equ	MovFwd = (1<<EngDirR|1<<EngDirL)
+    64: ;	Step 2.		substitute constants
+    65: ;			 .equ	MovFwd = (1<<5|1<<6)
+    66: ;	Step 3.		calculate shifts
+    67: ;			 .equ	MovFwd = (b00100000|b01000000)
+    68: ;	Step 4.		calculate logical or
+    69: ;			 .equ	MovFwd = b01100000
+    70: ; Thus MovFwd has a constant value of b01100000 or $60 and any
+    71: ; instance of MovFwd within the code will be replaced with $60
+    72: ; before the code is compiled.  So why did I do it this way 
+    73: ; instead of explicitly specifying MovFwd = $60?  Because, if 
+    74: ; I wanted to put the Left and Right Direction Bits on different 
+    75: ; pin allocations, all I have to do is change thier individual 
+    76: ; constants, instead of recalculating the new command and 
+    77: ; everything else just falls in place.
+    78: ;==============================================================
+    79: 
+    80: ;**************************************************************
+    81: ;* Beginning of code segment
+    82: ;**************************************************************
+    83: .cseg
+    84: 
+    85: ;--------------------------------------------------------------
+    86: ; Interrupt Vectors
+    87: ;--------------------------------------------------------------
+    88: .org	$0000				; Reset and Power On Interrupt
+    89: 000000   C045  rjmp	INIT		; Jump to program initialization
+    90: 
+    91: .org	$0046				; End of Interrupt Vectors
+    92: ;--------------------------------------------------------------
+    93: ; Program Initialization
+    94: ;--------------------------------------------------------------
+    95: INIT:
+    96:     ; Initialize the Stack Pointer (VERY IMPORTANT!!!!)
+    97: 000046   EF0F  ldi		mpr, low(RAMEND)
+    98: 000047   BF0D  out		SPL, mpr		; Load SPL with low byte of RAMEND
+    99: 000048   E100  ldi		mpr, high(RAMEND)
+   100: 000049   BF0E  out		SPH, mpr		; Load SPH with high byte of RAMEND
+   101: 
+   102:     ; Initialize Port B for output
+   103: 00004A   EF0F  ldi		mpr, $FF		; Set Port B Data Direction Register
+   104: 00004B   BB07  out		DDRB, mpr		; for output
+   105: 00004C   E000  ldi		mpr, $00		; Initialize Port B Data Register
+   106: 00004D   BB08  out		PORTB, mpr		; so all Port B outputs are low		
+   107: 
+   108: 	; Initialize Port D for input
+   109: 00004E   E000  ldi		mpr, $00		; Set Port D Data Direction Register
+   110: 00004F   BB01  out		DDRD, mpr		; for input
+   111: 000050   EF0F  ldi		mpr, $FF		; Initialize Port D Data Register
+   112: 000051   BB02  out		PORTD, mpr		; so all Port D inputs are Tri-State
+   113: 
+   114: 000052   E044  ldi		led, START
+   115: 
+   116: ;---------------------------------------------------------------
+   117: ; Main Program
+   118: ;---------------------------------------------------------------
+   119: MAIN:
+   120: 000053   B306  in		mpr, PINB
+   121: 000054   2704  eor		mpr, led
+   122: 000055   BB08  out		PORTB, mpr
+   123: 
+   124: 000056   E01A  ldi		waitcnt, WTime	; Wait for 1 second
+   125: 000057   D027  rcall	Wait			; Call wait function
+   126: 
+   127: 000058   B300  in		mpr, PIND		; Get whisker input from Port D
+   128: 000059   7005  andi	mpr, BTN_MASK
+   129: 00005A   3004  cpi		mpr, (1<<BTNL)	; Check for Right Whisker input (Recall Active Low)
+   130: 00005B   F411  brne	NEXT			; Continue with next check
+   131: 00005C   D005  rcall	HitRight		; Call the subroutine HitRight
+   132: 00005D   CFF5  rjmp	MAIN			; Continue with program
+   133: 00005E   3001  cpi		mpr, (1<<BTNR)	; Check for Left Whisker input (Recall Active)
+   134: 00005F   F799  brne	MAIN			; No Whisker input, continue program
+   135: 000060   D00E  rcall	HitLeft			; Call subroutine HitLeft
+   136: 000061   CFF1  rjmp	MAIN			; Continue through main
+   137: 
+   138: ;****************************************************************
+   139: ;* Subroutines and Functions
+   140: ;****************************************************************
+   141: 
+   142: ;----------------------------------------------------------------
+   143: ; Sub:	HitRight
+   144: ; Desc:	Handles functionality of the TekBot when the right whisker
+   145: ;		is triggered.
+   146: ;----------------------------------------------------------------
+   147: HitRight:
+   148: 000062   930F  push	mpr			; Save mpr register
+   149: 000063   931F  push	waitcnt			; Save wait register
+   150: 000064   B70F  in		mpr, SREG	; Save program state
+   151: 000065   930F  push	mpr			;
+   152: 
+   153: 
+   154: 000066   E104  ldi		mpr, led
+   155: 000067   2704  eor		mpr, led
+   156: 000068   BB08  out		PORTB, mpr
+   157: 000069   954A  dec		led
+   158: 
+   159: 00006A   910F  pop		mpr		; Restore program state
+   160: 00006B   BF0F  out		SREG, mpr	;
+   161: 00006C   911F  pop		waitcnt		; Restore wait register
+   162: 00006D   910F  pop		mpr		; Restore mpr
+   163: 00006E   9508  ret				; Return from subroutine
+   164: 
+   165: ;----------------------------------------------------------------
+   166: ; Sub:	HitLeft
+   167: ; Desc:	Handles functionality of the TekBot when the left whisker
+   168: ;		is triggered.
+   169: ;----------------------------------------------------------------
+   170: HitLeft:
+   171: 00006F   930F  push	mpr			; Save mpr register
+   172: 000070   931F  push	waitcnt			; Save wait register
+   173: 000071   B70F  in		mpr, SREG	; Save program state
+   174: 000072   930F  push	mpr			;
+   175: 
+   176: 		; Move Backwards for a second
+   177: 		; ldi		mpr, MovBck	; Load Move Backward command
+   178: 000073   BB08  out		PORTB, mpr	; Send command to port
+   179: 000074   E01A  ldi		waitcnt, WTime	; Wait for 1 second
+   180: 000075   D009  rcall	Wait			; Call wait function
+   181: 
+   182: 		; Turn right for a second
+   183: 		; ldi		mpr, TurnR	; Load Turn Left Command
+   184: 000076   BB08  out		PORTB, mpr	; Send command to port
+   185: 000077   E01A  ldi		waitcnt, WTime	; Wait for 1 second
+   186: 000078   D006  rcall	Wait			; Call wait function
+   187: 
+   188: 		; Move Forward again	
+   189: 		; ldi		mpr, MovFwd	; Load Move Forward command
+   190: 000079   BB08  out		PORTB, mpr	; Send command to port
+   191: 
+   192: 00007A   910F  pop		mpr		; Restore program state
+   193: 00007B   BF0F  out		SREG, mpr	;
+   194: 00007C   911F  pop		waitcnt		; Restore wait register
+   195: 00007D   910F  pop		mpr		; Restore mpr
+   196: 00007E   9508  ret				; Return from subroutine
+   197: 
+   198: ;----------------------------------------------------------------
+   199: ; Sub:	Wait
+   200: ; Desc:	A wait loop that is 16 + 159975*waitcnt cycles or roughly 
+   201: ;		waitcnt*10ms.  Just initialize wait for the specific amount 
+   202: ;		of time in 10ms intervals. Here is the general eqaution
+   203: ;		for the number of clock cycles in the wait loop:
+   204: ;			((3 * ilcnt + 3) * olcnt + 3) * waitcnt + 13 + call
+   205: ;----------------------------------------------------------------
+   206: Wait:
+   207: 00007F   931F  push	waitcnt			; Save wait register
+   208: 000080   932F  push	ilcnt			; Save ilcnt register
+   209: 000081   933F  push	olcnt			; Save olcnt register
+   210: 
+   211: 000082   EE30  ldi		olcnt, 224		; load olcnt register
+   212: 000083   EE2D  ldi		ilcnt, 237		; load ilcnt register
+   213: 000084   952A  dec		ilcnt			; decrement ilcnt
+   214: 000085   F7F1  brne	ILoop			; Continue Inner Loop
+   215: 000086   953A  dec		olcnt		; decrement olcnt
+   216: 000087   F7D9  brne	OLoop			; Continue Outer Loop
+   217: 000088   951A  dec		waitcnt		; Decrement wait 
+   218: 000089   F7C1  brne	Loop			; Continue Wait loop	
+   219: 
+   220: 00008A   913F  pop		olcnt		; Restore olcnt register
+   221: 00008B   912F  pop		ilcnt		; Restore ilcnt register
+   222: 00008C   911F  pop		waitcnt		; Restore wait register
+   223: 00008D   9508  ret				; Return from subroutine
+
+Program             :       73 words.
+Constants           :        0 words.
+Total program memory:       73 words.
+Eeprom space        :        0 bytes.
+Data segment        :        0 bytes.
+Compilation completed, no errors.
+Compilation endet 14.01.2016, 12:47:58

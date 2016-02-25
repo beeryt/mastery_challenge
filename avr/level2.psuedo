@@ -1,0 +1,10 @@
+Initialize Ports
+Loop:
+	Toggle LED
+	Delay
+	If buttonR pressed:
+		Turn LED off
+		Change LED pin to the right
+	If buttonL pressed:
+		Turn LED off
+		Change LED pin to the left
