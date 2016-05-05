@@ -1,0 +1,41 @@
+Week 1: how-to basics
+Week 2: side-by-side terminal
+Week 3: auto formatting (gg=G)
+Week 4: gdb
+
+
+Useful Linux commands
+
+beginner
+	whatis 	- one-line description of commands
+	ls		- list directory contents
+	cp		- copy files and directories
+	mv		- move (rename) files (overwrites!!!)
+	rm		- remove files or directories (-r) (Can't undo!!!!)
+	clear	- clear the terminal screen (Coder's best friend)
+	mkdir	- make directories
+	cd		- change directory (*not actually a linux command)
+	pwd		- print working directory
+
+	up/down - move up and down in your command history
+	tab		- tab completes current file name
+
+intermediate
+	man		- interface to reference manuals
+	less	- opposite of more (A file viewer)
+	cat		- concatenate files (Spit files out on screen)
+
+
+	ls flags
+		-a, --all	- do not ignore entries starting with .
+		-l			- use a long listing format
+		-h, 		- print human readable sizes (e.g., 1K 234M 2G)
+		-R,			- list subdirectories recursively
+		-t			-- sort by modification time
+
+
+advanced
+	grep	- print lines matching a pattern
+	awk		- pattern scanning (useful for printing )
+	sed		- filter and transform text
+	wget	- download files from internet
